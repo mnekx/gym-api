@@ -1,0 +1,8 @@
+- for jwt authentication, 
+the secret key that is fetched frome environment variable, 
+can it not be accessed by the attacker?
+- ORM, sequelize
+- could JWT be used to make socialnet-app with secrecy
+- app ya mazao ya tz, bure, wakulima wakitafuta na kupata wateja online bureeeee, 
+but what we get is the shughuli zao za kilimo mwaka mzima 
+- 12factore.net
