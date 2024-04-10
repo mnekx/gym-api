@@ -14,8 +14,9 @@ const getAllMembers = (filterParams) => {
         message: error,
       };
     }
-    return members;
   }
+
+  return members.map((member) => delete member.password);
 };
 
 const getOneMember = (memberID) => {
@@ -27,6 +28,7 @@ const getOneMember = (memberID) => {
         message: `Could not find member with ID ${memberID}`,
       };
     }
+    delete member.password;
     return member;
   } catch (error) {
     throw {
@@ -51,8 +53,10 @@ const updateOneMember = (memberID, changes) => {
       ...DB.members[indexForUpdate],
       ...changes,
     };
+
     DB.members[indexForUpdate] = updatedMember;
     saveToDB(DB);
+    delete updatedMember.password;
     return updatedMember;
   } catch (error) {
     throw {

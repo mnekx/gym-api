@@ -1,5 +1,6 @@
 const Member = require('../database/Member');
 const { v4: uuid } = require('uuid');
+const bcrypt = require('bcrypt');
 
 const getAllMembers = (filterParams) => {
   try {
@@ -13,14 +14,19 @@ const getAllMembers = (filterParams) => {
 const getOneMember = (memberID) => {
   try {
     const returnedMember = Member.getOneMember(memberID);
+    return returnedMember;
   } catch (error) {
     throw error;
   }
 };
 
-const updateOneMember = (memberID) => {
+const updateOneMember = async (memberID, changes) => {
   try {
-    const updatedMember = Member.updateOneMember(memberID);
+    if (changes.password) {
+      const hashedPassword = await bcrypt.hash(changes.password, 10);
+      changes = { ...changes, password: hashedPassword };
+    }
+    let updatedMember = Member.updateOneMember(memberID, changes);
     return updatedMember;
   } catch (error) {
     throw error;
@@ -42,6 +48,7 @@ const createNewMember = (newMember) => {
   };
   try {
     const newlyCreatedMember = Member.createNewMember(memberToInsert);
+    delete newlyCreatedMember.password;
     return newlyCreatedMember;
   } catch (error) {
     throw errror;
