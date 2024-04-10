@@ -16,11 +16,14 @@ const getAllMembers = (filterParams) => {
     }
   }
 
-  return members.map((member) => delete member.password);
+  return members.map((member) => {
+    delete member.password;
+    return member;
+  });
 };
 
 const getOneMember = (memberID) => {
-  const member = DB.members.find((member) => member.member.id === memberID);
+  const member = DB.members.find((member) => member.id === memberID);
   try {
     if (!member) {
       throw {
